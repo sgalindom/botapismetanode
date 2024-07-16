@@ -1,37 +1,33 @@
 const https = require("https");
 
-function EnviarMensajeWhatsapp(text, number) {
-    const data = JSON.stringify({
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": "573202212377",
-        "type": "text",
-        "text": {
-            "preview_url": false,
-            "body": "hola inge eder esto es una prueba del chat bot"
-        }
-    });
+function EnviarMensajeWhatsapp(type, data, number) {
+    const payload = {
+        messaging_product: "whatsapp",
+        recipient_type: "individual",
+        to: number,
+        type: type,
+        [type]: data
+    };
 
     const options = {
         hostname: "graph.facebook.com",
         path: "/v19.0/349809654879706/messages",
         method: "POST",
-        body : data,
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer EAAHLNEoY0UkBO8iFZBFWTJlfeOZAqauZBZA5OgS8fv4GxchmQ5MxZCD8OqVcFZCgyvS6fOoWX5UP1pPLl0OyZBX2RG3bLN3kwXE6vsbh2vSWY5fxCdyTjUCZBuPmMuoDebiUcYwi7j5pjdbxxYYMh1JKqABnzpoc4AZCvvE3yt2ZB8XCn8n8mdleHGVJrTjvjfi9uVC9jsAnlsQYZBGnkpHOwZDZD"
+            Authorization: "Bearer EAAQwpP4h970BOyOQ1GxmNdn7jReM14DGqHNYPVHTRbjuvEuFkb8ZCh3rXZBkUeGwihF4auJ70olwiZCFujvV53vUZBStpJSIStCBfHgBafDrtXYfF9a4IAnMVlhGP3VZA4kUjEjQ8VeB2U1pv1bjiqpK4xntctxrmZAB0L6pesNXGTvZApeTEgKqw5zlMZCgBFhgL22i0FMwN85hW53YFAZDZD"
         }
     };
 
-    const req = https.request (options, res =>{
-        res.on("data",d=>{
+    const req = https.request(options, res => {
+        res.on("data", d => {
             process.stdout.write(d);
         });
     });
-    req.write(data);
-    req.end ();
-}
 
+    req.write(JSON.stringify(payload));
+    req.end();
+}
 
 module.exports = {
     EnviarMensajeWhatsapp

@@ -5,12 +5,6 @@ const apicontroller = require("../controller/apicontroller");
 
 router
   .get("/", apicontroller.verificar)
+  .post("/", apicontroller.recibir);
 
-  .post("/", apicontroller.recibir)
-
-
-  module.exports = router;
-
-
-
-
+module.exports = router;
